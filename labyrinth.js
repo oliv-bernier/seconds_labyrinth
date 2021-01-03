@@ -3,6 +3,7 @@ let app = {
     init: function(){
        app.loadRules();
     },
+    difficulty: '',
     x: 2,
     y: 2,
     cellWidth: 40,
@@ -23,25 +24,71 @@ let app = {
     loadRules: function() {
 
             let rules = document.getElementById('rules');
-            let rulesStart = document.getElementById('rulesStart');   
+            let rulesLevel = document.getElementById('rulesLevel');   
             
             let firstRule = document.createElement('p');
             firstRule.classList.add('rules__one');
             firstRule.innerHTML = 'Tu n\'as que quelques secondes pour faire sortir la souris du labyrinthe avant que les chats ne se réveillent. 😏<br>Utilises les touches directionnelles de ton clavier !'
 
-            let buttonStart = document.createElement('button');
-            buttonStart.id = 'launchGame';
-            buttonStart.classList.add('launchGame');
-            buttonStart.textContent = "C'est parti !";
+            let moto = document.createElement('p');
+            moto.textContent = 'Choisi un niveau de difficulté et c\'est parti.';
 
+            let buttonMedium = document.createElement('button');
+            buttonMedium.id = 'launchGameMedium';
+            buttonMedium.classList.add('launchGameMedium');
+            buttonMedium.textContent = "Normal 😎";
+
+            let buttonEasy = document.createElement('button'
+            );
+            buttonEasy.id = 'launchGameEasy';
+            buttonEasy.classList.add('launchGameEasy');
+            buttonEasy.textContent = "Facile 🤨";
+
+            let buttonHard = document.createElement('button');
+            buttonHard.id = 'launchGameHard';
+            buttonHard.classList.add('launchGameHard');
+            buttonHard.textContent = "Difficile 🤓";
+
+            rules.prepend(moto);
             rules.prepend(firstRule);
-            rulesStart.appendChild(buttonStart);
+            rulesLevel.appendChild(buttonMedium);
+            rulesLevel.appendChild(buttonEasy);
+            rulesLevel.appendChild(buttonHard);
 
-            let selectButtonStartElmt = document.getElementById('launchGame');
+            let selectButtonElmtMedium = document.getElementById('launchGameMedium');
+            let selectButtonElmtEasy = document.getElementById('launchGameEasy');
+            let selectButtonElmtHard = document.getElementById('launchGameHard');
 
-            selectButtonStartElmt.addEventListener('click', app.loadGame);
+            selectButtonElmtMedium.addEventListener('click', app.loadLevelMedium);
+
+            selectButtonElmtEasy.addEventListener('click', app.loadLevelEasy);
+
+            selectButtonElmtHard.addEventListener('click', app.loadLevelHard);
 
             window.addEventListener('keydown', app.logKey);
+    },
+
+    loadLevelMedium: function(evt) {
+        if (evt.currentTarget) {
+            app.difficulty = 1;
+            app.loadGame();
+        }
+    },
+
+    loadLevelEasy: function(evt) {
+        if (evt.currentTarget) {
+            app.difficulty = 2;
+            app.loadGame();
+            console.log(app.difficulty);
+        }
+    },
+
+    loadLevelHard: function(evt) {
+        if (evt.currentTarget) {
+            app.difficulty = 3;
+            app.loadGame();
+            console.log(app.difficulty);
+        }
     },
 
     loadGame: function() {
@@ -51,7 +98,17 @@ let app = {
 
         app.drawBoard(model);
 
-        app.seconds(5000);
+        console.log(app.difficulty);
+
+        if (app.difficulty == 1) {
+            return app.seconds(7000);
+        }
+        if (app.difficulty == 2) {
+            return app.seconds(9000);
+        }
+        if (app.difficulty == 3) {
+            return app.seconds(5000);
+        }
     },
 
     logKey: function(evt) {
@@ -264,14 +321,14 @@ document.addEventListener('DOMContentLoaded', app.init);
 let model = [
     'a**********************b',
     '*oxxxxxxxxxxxxxxx*xxx*-*',
-    '*x*x****x*******x*x***x*',
-    '*x*x*xxxx*xxxxxxx*x***x*',
-    '*x*x****xxx*******x***x*',
-    '*x*xxxx*x***xxxxx*x***x*',
-    '*x******x**xxz*xf*x***x*',
-    '*xxx*x*xx**x******x***x*',
-    '*x*xxxxxxxxxxx**xxxxx*x*',
-    '*x***x**********xxx*x*x*',
+    '*x*x****x*******x*x*x*x*',
+    '*x*x*xxxx*xxxxxxx*x*x*x*',
+    '*x*x****xxx*******x*x*x*',
+    '*x*xxxx*x***xxxxx*x*x*x*',
+    '*x******x**xxz*xf*x*x*x*',
+    '*xxx*x*xx**x******x*x*x*',
+    '*x*xxxxxxxxxxx**xxx*x*x*',
+    '*x***x**********xxz*x*x*',
     '*xxxxxxxxxxxxxxxxxx*xxx*',
     'c**********************d',
 ];

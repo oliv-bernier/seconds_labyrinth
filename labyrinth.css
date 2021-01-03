@@ -44,12 +44,12 @@ h1 {
     padding: 1rem;
 }
 
-.rules__start {
+.rules__level {
     display: flex;
     flex-direction: row;
 }
 
-.launchGame {
+.launchGameMedium, .launchGameEasy, .launchGameHard {
     font-family: 'Permanent Marker', cursive;
     font-size: 2rem;
     background-color: #F0930C;
@@ -65,7 +65,7 @@ h1 {
     transition-duration: 0.4s;
 }
 
-.launchGame:hover {
+.launchGameMedium:hover, .launchGameEasy:hover, .launchGameHard:hover {
     background-color: black;
     color: #F0930C;
     border: 1px solid white;
